@@ -82,7 +82,7 @@ public:
 
         for (int i = 0; i < size; i++) {
             if (years[i] > purchaseYear && years[i] <= saleYear) {
-                double adjustmentFactor = 1 + ((priceGrowths[i] - inflationRates[i]) / 100.0);
+                double adjustmentFactor = 1 + ((priceGrowths[i]) / 100.0);
                 cout << "Growth Factor for " << years[i] << ": " << adjustmentFactor << endl;
                 finalPrice *= adjustmentFactor;
             }
@@ -93,7 +93,7 @@ public:
     // Calculate the long-term capital gains tax (LTCG)
     double computeLTCG(double sellingPrice) {
         double profit = sellingPrice - initialCost;
-        return profit > 0 ? 0.20 * profit : 0;  // Taxed at 20%
+        return profit > 0 ? 0.125 * profit : 0;  // Taxed at 20%
     }
 };
 
