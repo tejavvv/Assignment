@@ -90,10 +90,28 @@ public:
         return finalPrice;
     }
 
+     double computeSellingPrice_OLD(int years[], double inflationRates[], double priceGrowths[], int size) {
+        double finalPrice = initialCost;
+
+        for (int i = 0; i < size; i++) {
+            if (years[i] > purchaseYear && years[i] <= saleYear) {
+                double adjustmentFactor = 1 + ((priceGrowths[i] - inflationRates[i]) / 100.0);
+                cout << "Growth Factor for " << years[i] << ": " << adjustmentFactor << endl;
+                finalPrice *= adjustmentFactor;
+            }
+        }
+        return finalPrice;
+    }
+
     // Calculate the long-term capital gains tax (LTCG)
     double computeLTCG(double sellingPrice) {
         double profit = sellingPrice - initialCost;
         return profit > 0 ? 0.125 * profit : 0;  // Taxed at 20%
+    }
+
+     double computeLTCG_OLD(double sellingPrice) {
+        double profit = sellingPrice - initialCost;
+        return profit > 0 ? 0.2 * profit : 0;  // Taxed at 20%
     }
 };
 
@@ -116,9 +134,25 @@ int main() {
     double estimatedSellingPrice = calculator.computeSellingPrice(inflationData.years, inflationData.inflationRates, inflationData.priceGrowths, inflationData.dataCount);
     double tax = calculator.computeLTCG(estimatedSellingPrice);
 
-    // Output the results
+    double OldSellingPrice = calculator.computeSellingPrice_OLD(inflationData.years, inflationData.inflationRates, inflationData.priceGrowths, inflationData.dataCount);
+    double Oldtax = calculator.computeLTCG_OLD(OldSellingPrice);
+
+
     cout << "Estimated Selling Price: Rs " << estimatedSellingPrice << " lakhs" << endl;
     cout << "Long-term Capital Gains Tax (LTCG): Rs " << tax << " lakhs" << endl;
+
+    double diff = Oldtax - tax;
+
+    if(diff>0){
+        cout<<"Old tax is higher by new tax with a difference of "<<diff<<endl;
+    }
+    else if(diff<0){
+        cout<<"New tax is higher by old tax with a difference of "<<(-diff)<<endl;
+    }
+    else{
+        cout<<"Both tax rates are same"<<endl;
+    }
+    
 
     return 0;
 }
