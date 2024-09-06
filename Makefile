@@ -5,7 +5,7 @@ CXX = g++
 CXXFLAGS = -std=c++11 -Wall -Wextra
 
 # Target executable
-TARGET = output
+TARGET = outpu
 
 # Source files
 SRCS = main.cpp
